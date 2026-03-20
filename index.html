@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TENIZ OFFICIAL - Aviator Signals with Animation</title>
+    <style>
+        /* මූලික CSS Layout */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbar during animation */
+        }
+
+        .container {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            width: 350px;
+            text-align: center;
+            border: 1px solid #30363d;
+            /* Slide-in animation for container on load */
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        h2 { color: #ff0044; margin-bottom: 20px; }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: white;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff0044;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff0044;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover { background-color: #cc0036; }
+        button:active { transform: scale(0.98); } /* Click effect */
+
+        #signalDisplay {
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            padding: 15px;
+            background: #21262d;
+            border-radius: 10px;
+            opacity: 0; /* For fade-in animation */
+        }
+
+        .multiplier {
+            font-size: 32px;
+            color: #00ff00;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Signal Value update animation */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pulse-animation {
+            animation: pulse 0.5s ease-out;
+        }
+
+        /* Page load animation */
+        @keyframes slideInDown {
+            from {
+                transform: translate3d(0, -100%, 0);
+                visibility: visible;
+            }
+            to {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* Fade-in animation for signal display */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>TENIZ OFFICIAL</h2>
+    <div id="loginSection">
+        <p>Enter Password to Access Signals</p>
+        <input type="password" id="passInput" placeholder="Password...">
+        <button onclick="checkPassword()">Login</button>
+    </div>
+
+    <div id="signalDisplay">
+        <h3>Aviator Signal</h3>
+        <p>Next Multiplier:</p>
+        <div class="multiplier" id="nextValue">--</div>
+        <button onclick="generateSignal()" style="margin-top: 15px; background-color: #238636;">Get Next Signal</button>
+    </div>
+</div>
+
+<script>
+    function checkPassword() {
+        const pass = document.getElementById('passInput').value;
+        if(pass === "teniz2026") {
+            // Hide login section
+            document.getElementById('loginSection').style.display = 'none';
+            // Show signal display with animation
+            const signalDisplay = document.getElementById('signalDisplay');
+            signalDisplay.style.display = 'block';
+            signalDisplay.classList.add('fade-in');
+        } else {
+            alert("වැරදි මුරපදයක්! නැවත උත්සාහ කරන්න.");
+            document.getElementById('passInput').value = ''; // Clear input
+        }
+    }
+
+    function generateSignal() {
+        const nextValueElem = document.getElementById('nextValue');
+        
+        // Remove animation class if it exists
+        nextValueElem.classList.remove('pulse-animation');
+        
+        // This is a simulation - not real data
+        const randomVal = (Math.random() * (5.00 - 1.20) + 1.20).toFixed(2);
+        
+        // Slight delay before showing the new value to allow animation reset
+        setTimeout(() => {
+            nextValueElem.innerText = randomVal + "x";
+            // Add animation class to highlight the new value
+            nextValueElem.classList.add('pulse-animation');
+        }, 100);
+    }
+</script>
+
+</body>
+</html>
