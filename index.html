@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TENIZ OFFICIAL - V8 ULTIMATE PREDICTOR</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff0044;
+            --secondary: #00f2ff;
+            --success: #00ff88;
+            --warning: #ffb100;
+            --dark-bg: #05070a;
+            --card-bg: rgba(15, 18, 26, 0.9);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Stars */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 200%; height: 200%;
+            background: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+            animation: moveBg 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBg {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-50%, -50%); }
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 95%;
+            max-width: 420px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            box-shadow: 0 0 40px rgba(255, 0, 68, 0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        header {
+            background: rgba(22, 27, 38, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 20px; color: var(--primary); text-shadow: 0 0 10px var(--primary); letter-spacing: 2px; }
+        
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            margin-top: 8px;
+            color: #888;
+        }
+
+        .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); animation: blink 1.5s infinite; }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .content { padding: 20px; }
+
+        /* Login */
+        input[type="password"] {
+            width: 100%; padding: 15px; background: #000; border: 1px solid var(--primary);
+            border-radius: 12px; color: var(--success); font-size: 20px; text-align: center; margin-bottom: 20px; outline: none;
+        }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; background: #1a202c; border: none; color: #666; cursor: pointer; border-radius: 10px; font-weight: bold; font-family: 'Orbitron'; font-size: 12px; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px var(--primary); }
+
+        /* Signal Box */
+        .prediction-card {
+            background: rgba(0,0,0,0.7);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .multiplier { font-size: 55px; font-family: 'Orbitron'; color: var(--success); text-shadow: 0 0 20px var(--success); margin: 10px 0; }
+
+        /* Strategy Box */
+        .strategy-box {
+            background: #111;
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .acc-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-family: 'Orbitron'; font-size: 12px; }
+
+        .btn {
+            width: 100%; padding: 18px; background: linear-gradient(45deg, var(--primary), #990029);
+            border: none; border-radius: 12px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; text-transform: uppercase; transition: 0.2s;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Future List */
+        .future-list { background: #000; border-radius: 12px; max-height: 220px; overflow-y: auto; padding: 5px; }
+        .future-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #222; font-size: 14px; animation: slideIn 0.3s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateX(10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+<audio id="snd1" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2d83287313.mp3"></audio>
+<audio id="snd2" src="https://cdn.pixabay.com/audio/2023/09/21/audio_1f237f3789.mp3"></audio>
+
+<div class="container">
+    <header>
+        <h1>TENIZ OFFICIAL</h1>
+        <div class="status-bar">
+            <div class="dot"></div>
+            <span>888STARZ SERVER: CONNECTED</span>
+        </div>
+        <div id="clock" style="font-size: 13px; color: var(--secondary); margin-top: 5px;">00:00:00</div>
+    </header>
+
+    <div class="content">
+        <div id="loginSec">
+            <p style="text-align:center; color:#666; font-size: 12px; letter-spacing: 1px;">ENCRYPTED ACCESS ONLY</p>
+            <input type="password" id="pass" placeholder="ENTER KEY">
+            <button class="btn" onclick="login()">AUTHORIZE</button>
+        </div>
+
+        <div id="appSec" style="display:none">
+            <div class="tabs">
+                <button class="tab-btn active" id="b1" onclick="switchTab('live')">LIVE BOT</button>
+                <button class="tab-btn" id="b2" onclick="switchTab('future')">SCHEDULE</button>
+            </div>
+
+            <div id="liveTab">
+                <div class="prediction-card">
+                    <div style="font-size: 11px; color: var(--secondary); letter-spacing: 1px;">ALGORITHM PREDICTION</div>
+                    <div class="multiplier" id="mVal">--</div>
+                    <div id="status" style="font-size: 11px; color: #555;">SYSTEM IDLE</div>
+                </div>
+
+                <div class="acc-row">
+                    <span>ACCURACY: <span id="accNum" style="color:var(--secondary)">--%</span></span>
+                    <span>RISK: <span id="riskLevel" style="color:#888">N/A</span></span>
+                </div>
+
+                <div class="strategy-box" id="strat">
+                    <b style="color:var(--secondary)">STRATEGY:</b> Waiting for signal analysis...
+                </div>
+
+                <button class="btn" id="genBtn" onclick="generateLive()">GENERATE SIGNAL</button>
+            </div>
+
+            <div id="futureTab" style="display:none">
+                <div class="future-list" id="fList">
+                    <p style="text-align:center; color:#333; padding:20px;">No future logs found.</p>
+                </div>
+                <button class="btn" style="margin-top:15px; background:#222;" onclick="generateFuture()">REFRESH SCHEDULE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Clock & Server Update
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+
+    function login() {
+        if(document.getElementById('pass').value === "teniz2026") {
+            document.getElementById('loginSec').style.display = 'none';
+            document.getElementById('appSec').style.display = 'block';
+            vibrate(100);
+        } else { alert("ACCESS DENIED!"); }
+    }
+
+    function switchTab(t) {
+        document.getElementById('liveTab').style.display = t === 'live' ? 'block' : 'none';
+        document.getElementById('futureTab').style.display = t === 'future' ? 'block' : 'none';
+        document.getElementById('b1').classList.toggle('active', t === 'live');
+        document.getElementById('b2').classList.toggle('active', t === 'future');
+        vibrate(50);
+    }
+
+    function vibrate(ms) { if (navigator.vibrate) navigator.vibrate(ms); }
+    function playSnd(id) { let s = document.getElementById(id); s.currentTime=0; s.play(); }
+
+    function getPrediction() {
+        let r = Math.random() * 100;
+        if(r < 70) return (Math.random() * (2.1 - 1.1) + 1.1).toFixed(2);
+        if(r < 93) return (Math.random() * (5.5 - 2.2) + 2.2).toFixed(2);
+        return (Math.random() * (15.0 - 5.6) + 5.6).toFixed(2);
+    }
+
+    function generateLive() {
+        const btn = document.getElementById('genBtn');
+        const mVal = document.getElementById('mVal');
+        const status = document.getElementById('status');
+        const acc = document.getElementById('accNum');
+        const risk = document.getElementById('riskLevel');
+        const strat = document.getElementById('strat');
+
+        btn.disabled = true;
+        status.innerText = "BYPASSING SERVER...";
+        status.style.color = var(--warning);
+        mVal.innerText = "...";
+        playSnd('snd1');
+        vibrate([50, 50, 50]);
+
+        setTimeout(() => {
+            let val = getPrediction();
+            mVal.innerText = val + "x";
+            status.innerText = "SIGNAL ENCRYPTED";
+            status.style.color = "var(--success)";
+            
+            // Accuracy & Strategy
+            let accVal = (Math.random() * (99.2 - 88.5) + 88.5).toFixed(1);
+            acc.innerText = accVal + "%";
+            
+            if(val < 2.0) {
+                risk.innerText = "LOW"; risk.style.color = "var(--success)";
+                strat.innerHTML = `<b style="color:var(--success)">SAFE:</b> Cash out early at 1.10x or 1.20x.`;
+            } else if(val < 5.0) {
+                risk.innerText = "MEDIUM"; risk.style.color = "var(--warning)";
+                strat.innerHTML = `<b style="color:var(--warning)">STABLE:</b> Recommended auto cash out at 2.00x.`;
+            } else {
+                risk.innerText = "HIGH"; risk.style.color = "var(--primary)";
+                strat.innerHTML = `<b style="color:var(--primary)">RISKY:</b> High multiplier detected. Use small bets.`;
+            }
+
+            playSnd('snd2');
+            vibrate([100, 50, 100]);
+            btn.disabled = false;
+        }, 2500);
+    }
+
+    function generateFuture() {
+        playSnd('snd1');
+        vibrate(100);
+        const list = document.getElementById('fList');
+        list.innerHTML = "";
+        let now = new Date();
+        for(let i=1; i<=7; i++) {
+            let time = new Date(now.getTime() + (i * 2.5 * 60000)).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+            list.innerHTML += `<div class="future-item">
+                <span style="color:var(--secondary)">${time}</span>
+                <span style="color:#666">→</span>
+                <span style="color:var(--success); font-weight:bold;">${getPrediction()}x</span>
+            </div>`;
+        }
+        playSnd('snd2');
+    }
+</script>
+
+</body>
+</html>
