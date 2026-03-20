@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TENIZ OFFICIAL - V9 FINAL UNLOCKED</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff0044;
+            --secondary: #00f2ff;
+            --success: #00ff88;
+            --warning: #ffb100;
+            --dark-bg: #05070a;
+            --card-bg: rgba(15, 18, 26, 0.95);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Stars Background */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 200%; height: 200%;
+            background: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+            animation: moveBg 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBg { from { transform: translate(0, 0); } to { transform: translate(-50%, -50%); } }
+
+        .container {
+            background: var(--card-bg);
+            width: 95%;
+            max-width: 420px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            box-shadow: 0 0 40px rgba(255, 0, 68, 0.3);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        header {
+            background: rgba(22, 27, 38, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 22px; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        
+        .status-bar { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 11px; color: #888; margin-top: 5px; }
+        .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .content { padding: 20px; }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; background: #1a202c; border: none; color: #666; cursor: pointer; border-radius: 10px; font-weight: bold; font-family: 'Orbitron'; font-size: 11px; }
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 0 10px var(--primary); }
+
+        .prediction-card {
+            background: rgba(0,0,0,0.7);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .multiplier { font-size: 55px; font-family: 'Orbitron'; color: var(--success); text-shadow: 0 0 20px var(--success); margin: 10px 0; }
+        
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-family: 'Orbitron'; font-size: 12px; }
+        
+        .strategy-box {
+            background: #111; padding: 12px; border-radius: 10px; border-left: 4px solid var(--secondary);
+            margin-bottom: 15px; font-size: 13px; text-align: left;
+        }
+
+        .btn {
+            width: 100%; padding: 18px; background: linear-gradient(45deg, var(--primary), #990029);
+            border: none; border-radius: 12px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; text-transform: uppercase;
+        }
+        .btn:disabled { opacity: 0.5; }
+
+        .future-list { background: #000; border-radius: 12px; max-height: 250px; overflow-y: auto; }
+        .future-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #222; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<audio id="s1" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2d83287313.mp3"></audio>
+<audio id="s2" src="https://cdn.pixabay.com/audio/2023/09/21/audio_1f237f3789.mp3"></audio>
+
+<div class="container">
+    <header>
+        <h1>TENIZ OFFICIAL</h1>
+        <div class="status-bar"><div class="dot"></div> SERVER: ACTIVE (888STARZ)</div>
+        <div id="clock" style="font-size: 13px; color: var(--secondary); margin-top: 5px;">00:00:00</div>
+    </header>
+
+    <div class="content">
+        <div class="tabs">
+            <button class="tab-btn active" id="b1" onclick="tab('live')">LIVE BOT</button>
+            <button class="tab-btn" id="b2" onclick="tab('future')">SCHEDULE</button>
+        </div>
+
+        <div id="liveTab">
+            <div class="prediction-card">
+                <div style="font-size: 11px; color: var(--secondary);">ALGORITHM PREDICTION</div>
+                <div class="multiplier" id="val">--</div>
+                <div id="st" style="font-size: 11px; color: #555;">READY TO ANALYZE</div>
+            </div>
+
+            <div class="info-row">
+                <span>ACCURACY: <span id="accNum" style="color:var(--secondary)">--%</span></span>
+                <span>RISK: <span id="risk" style="color:#888">N/A</span></span>
+            </div>
+
+            <div class="strategy-box" id="strat">
+                <b style="color:var(--secondary)">STRATEGY:</b> Waiting for analysis...
+            </div>
+
+            <button class="btn" id="gBtn" onclick="gen()">GENERATE SIGNAL</button>
+        </div>
+
+        <div id="futureTab" style="display:none">
+            <div class="future-list" id="fList">
+                <p style="text-align:center; color:#333; padding:20px;">No data generated.</p>
+            </div>
+            <button class="btn" style="margin-top:15px; background:#222;" onclick="genF()">GET FUTURE LIST</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+
+    function tab(t) {
+        document.getElementById('liveTab').style.display = t === 'live' ? 'block' : 'none';
+        document.getElementById('futureTab').style.display = t === 'future' ? 'block' : 'none';
+        document.getElementById('b1').classList.toggle('active', t === 'live');
+        document.getElementById('b2').classList.toggle('active', t === 'future');
+    }
+
+    function sound(id) { let s = document.getElementById(id); s.currentTime=0; s.play(); }
+
+    function getVal() {
+        let r = Math.random() * 100;
+        if(r < 70) return (Math.random() * (2.1 - 1.1) + 1.1).toFixed(2);
+        return (Math.random() * (12.0 - 2.2) + 2.2).toFixed(2);
+    }
+
+    function gen() {
+        sound('s1');
+        const btn = document.getElementById('gBtn');
+        btn.disabled = true;
+        document.getElementById('st').innerText = "CONNECTING TO SERVER...";
+        document.getElementById('val').innerText = "...";
+        if (navigator.vibrate) navigator.vibrate(50);
+
+        setTimeout(() => {
+            let v = getVal();
+            document.getElementById('val').innerText = v + "x";
+            document.getElementById('st').innerText = "SIGNAL SECURED";
+            document.getElementById('accNum').innerText = (Math.random() * (99.4 - 88.0) + 88.0).toFixed(1) + "%";
+            
+            const rk = document.getElementById('risk');
+            const st = document.getElementById('strat');
+            if(v < 2.0) { rk.innerText="LOW"; rk.style.color="var(--success)"; st.innerHTML=`<b style="color:var(--success)">SAFE:</b> Cash out early.`; }
+            else { rk.innerText="HIGH"; rk.style.color="var(--primary)"; st.innerHTML=`<b style="color:var(--primary)">RISKY:</b> Hold with caution.`; }
+
+            sound('s2');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            btn.disabled = false;
+        }, 2500);
+    }
+
+    function genF() {
+        sound('s1');
+        const list = document.getElementById('fList');
+        list.innerHTML = "";
+        let now = new Date();
+        for(let i=1; i<=8; i++) {
+            let time = new Date(now.getTime() + (i * 3 * 60000)).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+            list.innerHTML += `<div class="future-item"><span>${time}</span><span style="color:var(--success)">${getVal()}x</span></div>`;
+        }
+        sound('s2');
+    }
+</script>
+
+</body>
+</html>
